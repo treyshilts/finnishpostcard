@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Music — Finnish Postcard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: "Times New Roman", Times, serif;
+      margin: 40px;
+      background: white;
+      color: black;
+    }
+
+    h1 {
+      font-style: italic;
+      font-weight: normal;
+      margin-bottom: 40px;
+    }
+
+    h2 {
+      font-weight: normal;
+      margin-top: 40px;
+      margin-bottom: 15px;
+      font-size: 18px;
+      letter-spacing: 0.5px;
+    }
+
+    .grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .item {
+      width: 140px;
+    }
+
+    .item img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .text {
+      font-size: 14px;
+      line-height: 1.3;
+    }
+
+    @media (max-width: 600px) {
+      .grid {
+        flex-direction: column;
+      }
+
+      .item {
+        width: 100%;
+        max-width: 250px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>music</h1>
+
+  <h2>ALBUMS & EPS</h2>
+  <div class="grid">
+    <div class="item">
+      <img src="body.png" alt="Body">
+      <div class="text">Body, 2025</div>
+    </div>
+
+    <div class="item">
+      <img src="crows.png" alt="How to Mute Crows">
+      <div class="text">How to Mute Crows, 2023</div>
+    </div>
+  </div>
+
+  <h2>COLLABORATIONS</h2>
+  <div class="grid">
+    <div class="item">
+      <img src="imaginary.png" alt="Imaginary Backseat Acrobatics">
+      <div class="text">
+        Imaginary Backseat Acrobatics<br>
+        Finnish Postcard & Faint, Collaborative Single, 2026
+      </div>
+    </div>
+
+    <div class="item">
+      <img src="everything.png" alt="Everything">
+      <div class="text">
+        Everything<br>
+        Finnish Postcard & Hollis Howard, Collaborative Single, 2025
+      </div>
+    </div>
+
+    <div class="item">
+      <img src="moment.png" alt="Every Moment Lies Beside Me">
+      <div class="text">
+        Every Moment Lies Beside Me<br>
+        Finnish Postcard & Short Frenzy, Collaborative EP, 2025
+      </div>
+    </div>
+
+    <div class="item">
+      <img src="exception.png" alt="Exceptions to the Rule">
+      <div class="text">
+        Exceptions to the Rule, Split EP, 2024
+      </div>
+    </div>
+  </div>
+
+  <h2>SINGLES</h2>
+  <div class="grid">
+    <div class="item">
+      <img src="hollow.png" alt="Dark in the Hollow">
+      <div class="text">Dark in the Hollow, 2024</div>
+    </div>
+
+    <div class="item">
+      <img src="monuments.png" alt="Monuments / Leaving Home">
+      <div class="text">Monuments / Leaving Home, 2022</div>
+    </div>
+
+    <div class="item">
+      <div class="text">Polluted Water / Highway, 2022</div>
+    </div>
+  </div>
+
+</body>
+</html>
