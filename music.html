@@ -7,6 +7,7 @@
   <style>
     body {
       font-family: "Times New Roman", Times, serif;
+      font-size: 18px; /* was default ~16px */
       margin: 40px;
       background: white;
       color: black;
@@ -16,24 +17,25 @@
       font-style: italic;
       font-weight: normal;
       margin-bottom: 40px;
+      font-size: 1.4em;
     }
 
     h2 {
       font-weight: normal;
       margin-top: 40px;
       margin-bottom: 15px;
-      font-size: 18px;
+      font-size: 20px; /* slightly bigger */
       letter-spacing: 0.5px;
     }
 
     .grid {
       display: flex;
       flex-wrap: wrap;
-      gap: 20px;
+      gap: 24px; /* slightly increased spacing */
     }
 
     .item {
-      width: 140px;
+      width: 160px; /* was 140px (~15% bigger) */
     }
 
     .item img {
@@ -41,12 +43,12 @@
       aspect-ratio: 1 / 1;
       object-fit: cover;
       display: block;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
     .text {
-      font-size: 14px;
-      line-height: 1.3;
+      font-size: 1em; /* now inherits larger base */
+      line-height: 1.4;
     }
 
     @media (max-width: 600px) {
@@ -56,7 +58,7 @@
 
       .item {
         width: 100%;
-        max-width: 250px;
+        max-width: 280px; /* scaled up from 250px */
       }
     }
   </style>
@@ -90,7 +92,7 @@
       <img src="imaginary.png" alt="Imaginary Backseat Acrobatics">
       <div class="text">
         <strong>"Imaginary Backseat Acrobatics"</strong><br>
-        w/ Faint<br>
+        Finnish Postcard, Faint<br>
         Single, 2026
       </div>
     </div>
@@ -99,7 +101,7 @@
       <img src="everything.png" alt="Everything">
       <div class="text">
         <strong>"Everything"</strong><br>
-        w/ Hollis Howard<br>
+        Finnish Postcard, Hollis Howard<br>
         Single, 2025
       </div>
     </div>
@@ -108,7 +110,7 @@
       <img src="moment.png" alt="Every Moment Lies Beside Me">
       <div class="text">
         <strong><em>Every Moment Lies Beside Me</em></strong><br>
-        w/ Short Frenzy<br>
+        Finnish Postcard, Short Frenzy<br>
         EP, 2025
       </div>
     </div>
@@ -117,7 +119,7 @@
       <img src="exceptions.png" alt="Exceptions to the Rule">
       <div class="text">
         <strong><em>Exceptions to the Rule</em></strong><br>
-        w/ Charlie Havenick<br>
+        Finnish Postcard, Charlie Havenick<br>
         Split, 2024
       </div>
     </div>
