@@ -10,10 +10,10 @@
       font-family: "Times New Roman", Times, serif;
       height: 100vh;
       overflow: hidden;
-      background: black;
+      background-color: black;
     }
 
-    #bg {
+    #sky-bg {
       position: fixed;
       inset: 0;
       z-index: 0;
@@ -34,8 +34,8 @@
     }
 
     .links a {
-      color: white;
       text-decoration: none;
+      color: white;
       margin: 0 8px;
     }
 
@@ -46,7 +46,7 @@
 </head>
 
 <body>
-  <div id="bg"></div>
+  <div id="sky-bg"></div>
 
   <div class="container">
     <h1>Finnish Postcard</h1>
@@ -65,86 +65,54 @@
     const scene = new THREE.Scene();
 
     const camera = new THREE.PerspectiveCamera(
-      70,
+      75,
       window.innerWidth / window.innerHeight,
       0.1,
       5000
     );
 
-    camera.position.set(0, 0, 8);
-    camera.lookAt(0, 0, 0);
+    camera.position.set(0, 0, 0);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
-    document.getElementById("bg").appendChild(renderer.domElement);
+    document.getElementById("sky-bg").appendChild(renderer.domElement);
 
-    const loader = new THREE.TextureLoader();
+    const textureLoader = new THREE.TextureLoader();
 
-    const SKY_SPEED = 0.0008;
-    const WATER_SPEED = 0.0012;
+    textureLoader.load("Sky.png", (texture) => {
+      texture.colorSpace = THREE.SRGBColorSpace;
 
-    // Change this to control water tile size.
-    // Smaller numbers = bigger tiles.
-    // Bigger numbers = smaller/more repeated tiles.
-    const WATER_TILE_REPEAT_X = 8;
-    const WATER_TILE_REPEAT_Y = 30;
+      // MUCH bigger sphere
+      const geometry = new THREE.SphereGeometry(2000, 64, 64);
 
-    loader.load("Sky.png", (skyTexture) => {
-      loader.load("water.png", (waterTexture) => {
-        skyTexture.colorSpace = THREE.SRGBColorSpace;
-        waterTexture.colorSpace = THREE.SRGBColorSpace;
-
-        skyTexture.wrapS = THREE.RepeatWrapping;
-        skyTexture.wrapT = THREE.RepeatWrapping;
-        skyTexture.repeat.set(1, 1);
-
-        waterTexture.wrapS = THREE.RepeatWrapping;
-        waterTexture.wrapT = THREE.RepeatWrapping;
-        waterTexture.repeat.set(WATER_TILE_REPEAT_X, WATER_TILE_REPEAT_Y);
-
-        const skyGeometry = new THREE.PlaneGeometry(200, 200);
-        const waterGeometry = new THREE.PlaneGeometry(200, 200);
-
-        const skyMaterial = new THREE.MeshBasicMaterial({
-          map: skyTexture,
-          side: THREE.DoubleSide
-        });
-
-        const waterMaterial = new THREE.MeshBasicMaterial({
-          map: waterTexture,
-          side: THREE.DoubleSide
-        });
-
-        const sky = new THREE.Mesh(skyGeometry, skyMaterial);
-        const water = new THREE.Mesh(waterGeometry, waterMaterial);
-
-        sky.position.set(0, 8, -30);
-        sky.rotation.x = -1.1;
-        
-        water.position.set(0, -8, -30);
-        water.rotation.x = 1.1;
-
-        scene.add(sky);
-        scene.add(water);
-
-        function animate() {
-          requestAnimationFrame(animate);
-
-          // Makes both textures appear to move toward the viewer
-          skyTexture.offset.y -= SKY_SPEED;
-          waterTexture.offset.y -= WATER_SPEED;
-
-          renderer.render(scene, camera);
-        }
-
-        animate();
+      const material = new THREE.MeshBasicMaterial({
+        map: texture,
+        side: THREE.BackSide
       });
+
+      const sphere = new THREE.Mesh(geometry, material);
+
+      // stronger stretch
+      sphere.scale.set(2.2, 1, 1);
+
+      scene.add(sphere);
+
+      function animate() {
+        requestAnimationFrame(animate);
+
+        sphere.rotation.y += 0.0004; // slightly slower for larger feel
+
+        renderer.render(scene, camera);
+      }
+
+      animate();
     });
 
     window.addEventListener("resize", () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
+
       renderer.setSize(window.innerWidth, window.innerHeight);
     });
   </script>
