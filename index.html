@@ -119,13 +119,11 @@
         const sky = new THREE.Mesh(skyGeometry, skyMaterial);
         const water = new THREE.Mesh(waterGeometry, waterMaterial);
 
-        // Sky plane: above horizon, tilted away
-        sky.position.set(0, 18, -60);
-        sky.rotation.x = Math.PI / 2.7;
-
-        // Water plane: below horizon, tilted away
-        water.position.set(0, -18, -60);
-        water.rotation.x = -Math.PI / 2.7;
+        sky.position.set(0, 8, -30);
+        sky.rotation.x = -1.1;
+        
+        water.position.set(0, -8, -30);
+        water.rotation.x = 1.1;
 
         scene.add(sky);
         scene.add(water);
