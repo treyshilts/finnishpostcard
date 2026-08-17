@@ -27,6 +27,27 @@
       margin-bottom: 20px;
     }
 
+    .top-images {
+      width: 600px;
+      margin: 0 auto 10px auto;
+    
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    
+    .logo-image {
+      width: 100px;
+      height: auto;
+      display: block;
+    }
+    
+    .email-image {
+      width: 100px;
+      height: auto;
+      display: block;
+    }
+    
     .sky-image {
       display: block;
       width: 600px;
@@ -68,13 +89,25 @@
   <div class="container">
     <h1><i>Finnish Postcard</i></h1>
 
+    <div class="top-images">
+      <img class="logo-image" src="FP-LOGO.webp" alt="Finnish Postcard logo">
+    
+      <a href="mailto:contact@finnishpostcard.com">
+        <img class="email-image" src="emailgif2.gif" alt="Email Finnish Postcard">
+      </a>
+    </div>
+    
     <img class="sky-image" src="Sky.png" alt="">
     
     <div class="links">
       <a href="#">music</a> 
+      ...
       <a href="#">shows</a> 
+      ...
       <a href="#">shop</a> 
+      ...
       <a href="#">words</a> 
+      ...
       <a href="#">bedroom</a>
     </div>
 
@@ -82,62 +115,5 @@
     
   </div>
 
-  <script type="module">
-    import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
-
-    const scene = new THREE.Scene();
-
-    const camera = new THREE.PerspectiveCamera(
-      75,
-      window.innerWidth / window.innerHeight,
-      0.1,
-      5000
-    );
-
-    camera.position.set(0, 0, 0);
-
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(window.devicePixelRatio);
-    document.getElementById("sky-bg").appendChild(renderer.domElement);
-
-    const textureLoader = new THREE.TextureLoader();
-
-    textureLoader.load("Sky.png", (texture) => {
-      texture.colorSpace = THREE.SRGBColorSpace;
-
-      // MUCH bigger sphere
-      const geometry = new THREE.SphereGeometry(2000, 64, 64);
-
-      const material = new THREE.MeshBasicMaterial({
-        map: texture,
-        side: THREE.BackSide
-      });
-
-      const sphere = new THREE.Mesh(geometry, material);
-
-      // stronger stretch
-      sphere.scale.set(2.2, 1, 1);
-
-      scene.add(sphere);
-
-      function animate() {
-        requestAnimationFrame(animate);
-
-        sphere.rotation.y += 0.001
-
-        renderer.render(scene, camera);
-      }
-
-      animate();
-    });
-
-    window.addEventListener("resize", () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    });
-  </script>
 </body>
 </html>
