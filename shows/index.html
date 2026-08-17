@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Shows — Finnish Postcard</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 60px 20px;
+      font-family: "Times New Roman", Times, serif;
+      background: white;
+      color: black;
+      text-align: center;
+    }
+
+    .shows-container {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    h2 {
+      font-weight: normal;
+      margin-bottom: 40px;
+    }
+
+    h3 {
+      font-size: 16px;
+      font-weight: normal;
+      margin-top: 50px;
+      margin-bottom: 20px;
+    }
+
+    .show {
+      margin-bottom: 18px;
+    }
+
+    .show-date {
+      font-style: italic;
+    }
+
+    .show a {
+      color: black;
+      text-decoration: none;
+    }
+
+    .show a:hover {
+      text-decoration: underline;
+    }
+
+    #status {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="shows-container">
+
+    <h2>shows</h2>
+
+    <div id="upcoming-shows">
+      <p>loading...</p>
+    </div>
+
+    <h3>previous shows:</h3>
+
+    <div id="past-shows">
+      <p>loading...</p>
+    </div>
+
+    <p id="status"></p>
+
+  </div>
+
+
+  <script>
+    const ARTIST_NAME = "Finnish Postcard";
+
+    // PUT YOUR BANDSINTOWN API KEY HERE
+    const API_KEY = "YOUR_API_KEY_HERE";
+
+
+    function formatEvent(event) {
+
+      const date = new Date(event.datetime);
+
+      const formattedDate = date.toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric"
+      });
+
+      const venue = event.venue?.name || "";
+
+      const city = event.venue?.city || "";
+      const region = event.venue?.region || "";
+
+      const location = [city, region]
+        .filter(Boolean)
+        .join(", ");
+
+      return `
+        <div class="show">
+
+          <div class="show-date">
+            ${formattedDate}
+          </div>
+
+          <div>
+            <a
+              href="${event.url}"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              ${venue}${location ? " — " + location : ""}
+            </a>
+          </div>
+
+        </div>
+      `;
+    }
+
+
+    async function loadShows() {
+
+      const upcomingContainer =
+        document.getElementById("upcoming-shows");
+
+      const pastContainer =
+        document.getElementById("past-shows");
+
+
+      try {
+
+        /*
+         * UPCOMING SHOWS
+         */
+
+        const upcomingURL =
+          `https://rest.bandsintown.com/artists/${encodeURIComponent(ARTIST_NAME)}/events` +
+          `?app_id=${encodeURIComponent(API_KEY)}&date=upcoming`;
+
+        const upcomingResponse =
+          await fetch(upcomingURL);
+
+        if (!upcomingResponse.ok) {
+          throw new Error("Unable to load upcoming shows");
+        }
+
+        const upcomingEvents =
+          await upcomingResponse.json();
+
+
+        if (upcomingEvents.length === 0) {
+
+          upcomingContainer.innerHTML =
+            "<p>no upcoming shows</p>";
+
+        } else {
+
+          upcomingContainer.innerHTML =
+            upcomingEvents
+              .sort(
+                (a, b) =>
+                  new Date(a.datetime) -
+                  new Date(b.datetime)
+              )
+              .map(formatEvent)
+              .join("");
+
+        }
+
+
+
+        /*
+         * PREVIOUS SHOWS
+         */
+
+        const pastURL =
+          `https://rest.bandsintown.com/artists/${encodeURIComponent(ARTIST_NAME)}/events` +
+          `?app_id=${encodeURIComponent(API_KEY)}&date=past`;
+
+        const pastResponse =
+          await fetch(pastURL);
+
+        if (!pastResponse.ok) {
+          throw new Error("Unable to load past shows");
+        }
+
+        const pastEvents =
+          await pastResponse.json();
+
+
+        const mostRecentPastShows =
+          pastEvents
+            .sort(
+              (a, b) =>
+                new Date(b.datetime) -
+                new Date(a.datetime)
+            )
+            .slice(0, 20);
+
+
+        if (mostRecentPastShows.length === 0) {
+
+          pastContainer.innerHTML =
+            "<p>no previous shows</p>";
+
+        } else {
+
+          pastContainer.innerHTML =
+            mostRecentPastShows
+              .map(formatEvent)
+              .join("");
+
+        }
+
+
+      } catch (error) {
+
+        console.error(error);
+
+        upcomingContainer.innerHTML =
+          "<p>unable to load shows</p>";
+
+        pastContainer.innerHTML = "";
+
+      }
+
+    }
+
+
+    loadShows();
+  </script>
+
+</body>
+</html>
